@@ -1,0 +1,24 @@
+{
+  "name": "react-native-form-validation",
+  "version": "1.0.1",
+  "description": "Simple form validation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/galikvalkin/react-native-form-validation.git"
+  },
+  "keywords": [
+    "react-native",
+    "form",
+    "validation"
+  ],
+  "author": "galikvalkin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/galikvalkin/react-native-form-validation/issues"
+  },
+  "homepage": "https://github.com/galikvalkin/react-native-form-validation#readme"
+}
