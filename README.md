@@ -4,6 +4,10 @@
 
 Simple JS component for validating forms. Works with deep nested objects.
 
+## Installation
+
+`npm i react-native-form-validation --save`
+
 ## Components
 ### 1. Form
 Simple View component.
