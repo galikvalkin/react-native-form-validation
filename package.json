@@ -1,6 +1,6 @@
 {
   "name": "react-native-form-validation",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Simple form validation",
   "main": "index.js",
   "scripts": {
