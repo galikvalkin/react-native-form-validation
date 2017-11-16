@@ -15,10 +15,13 @@
     "form",
     "validation"
   ],
-  "author": "galikvalkin",  
+  "author": "galikvalkin",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/galikvalkin/react-native-form-validation/issues"
   },
-  "homepage": "https://github.com/galikvalkin/react-native-form-validation#readme"
+  "homepage": "https://github.com/galikvalkin/react-native-form-validation#readme",
+  "dependencies": {
+    "prop-types": "^15.6.0"
+  }
 }
