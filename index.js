@@ -1,5 +1,6 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
 import { View } from 'react-native';
+import PropTypes from 'prop-types';
 
 function checkForm(formItems){
 	let requiredFields = findRequiredFields(formItems),
