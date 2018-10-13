@@ -3,9 +3,9 @@ import { View } from 'react-native';
 import PropTypes from 'prop-types';
 
 function checkForm(formItems){
-	let requiredFields = findRequiredFields(formItems),
-		requiredFieldsValue = findRequiredFieldsProps(requiredFields),
-		valuesFilledOut = checkValuesFilledOut(requiredFieldsValue);
+	let requiredFields = findRequiredFields(formItems);
+	let requiredFieldsValue = findRequiredFieldsProps(requiredFields);
+	let valuesFilledOut = checkValuesFilledOut(requiredFieldsValue);
 	
 	return {
 		isValid: checkAllFieldsValid(valuesFilledOut),
@@ -14,8 +14,8 @@ function checkForm(formItems){
 }
 
 function checkAllFieldsValid(fields){
-	for(var i = 0; i < fields.length; i++){
-		if(!fields[i].isValid){
+	for (let i = 0; i < fields.length; i++) {
+		if (!fields[i].isValid) {
 			return false;
 		}
 
@@ -26,20 +26,19 @@ function checkAllFieldsValid(fields){
 function checkValuesFilledOut(items){
 	let localItems = [...items];
 
-	for(var i = 0; i < localItems.length; i++){
-
+	for (let i = 0; i < localItems.length; i++) {
 		/**
 			If field required validation - validate
 		**/
-		if(localItems[i].requiresValidation){
+		if (localItems[i].requiresValidation) {
 			let value = localItems[i].props[localItems[i].fieldToBeValidated];
 
-			if(localItems[i].validationFunction){
+			if (localItems[i].validationFunction) {
 				localItems[i].isValid = localItems[i].validationFunction(value);
 			}
-			else{
-				let	isNotEmpty = value ? true : false,
-					regExpCheck = localItems[i].regExp ? localItems[i].regExp.test(value) : true;
+			else {
+				let	isNotEmpty = value ? true : false;
+				let regExpCheck = localItems[i].regExp ? localItems[i].regExp.test(value) : true;
 
 				localItems[i].isValid = isNotEmpty && regExpCheck;
 			}
@@ -47,11 +46,9 @@ function checkValuesFilledOut(items){
 		/**
 			Else - it is already valid
 		**/
-		else{
+		else {
 			localItems[i].isValid = true;
 		}
-		
-		
 	}
 	return localItems;
 }
@@ -76,67 +73,38 @@ function findRequiredFieldsProps(requiredFields){
 function findRequiredFields(formItems){
 	let requiredFields = [];
 
-	for(var i = 0; i < formItems.length; i++){
-		// if(formItems[i].props.isRequired){
-			// console.log('formItems[i]: ', formItems[i].props.validationFunction)
-			requiredFields.push({
-				requiresValidation: formItems[i].props.isRequired,
-				value: formItems[i], 
-				regExp: formItems[i].props.regExp,
-				fieldToBeValidated: formItems[i].props.fieldToBeValidated,
-				validationFunction: formItems[i].props.validationFunction
-			});
-		// }
+	for (let i = 0; i < formItems.length; i++) {
+		requiredFields.push({
+			requiresValidation: formItems[i].props.isRequired,
+			value: formItems[i], 
+			regExp: formItems[i].props.regExp,
+			fieldToBeValidated: formItems[i].props.fieldToBeValidated,
+			validationFunction: formItems[i].props.validationFunction
+		});
 	}
 	
 	return requiredFields;
 }
 
-// function findRequiredFields(formItems){
-// 	let requiredFields = [];
-
-// 	for(var i = 0; i < formItems.length; i++){
-// 		if(formItems[i].props.isRequired){
-// 			console.log('formItems[i]: ', formItems[i].props.validationFunction)
-// 			requiredFields.push({
-// 				value: formItems[i], 
-// 				regExp: formItems[i].props.regExp,
-// 				fieldToBeValidated: formItems[i].props.fieldToBeValidated,
-// 				validationFunction: formItems[i].props.validationFunction
-// 			});
-// 		}
-// 	}
-	
-// 	return requiredFields;
-// }
-
 /**
 ** recursive - we need to cover deep nested items.
 **/
 function findValueOfChildren(child, fieldToBeValidated){
-	if((!child.props.hasOwnProperty(fieldToBeValidated))){
-		
-		if(child.props.children){
-
-			if(child.props.children.length){
-
+	if (!child.props.hasOwnProperty(fieldToBeValidated)) {
+		if (child.props.children) {
+			if (child.props.children.length) {
 				let arr = child.props.children.map((item) => {
 					return findValueOfChildren(item, fieldToBeValidated);
 				});
 
 				return findValueInArray(arr);
-
 			}
-			else{
-
+			else {
 				return findValueOfChildren(child.props.children, fieldToBeValidated);
-
 			}
-
 		}
-
 	}
-	else{
+	else {
 		return child.props;
 	}
 }
@@ -146,8 +114,8 @@ function findValueOfChildren(child, fieldToBeValidated){
 **/
 function findValueInArray(arr){
 	let valueObj = {};
-	for(var i = 0; i < arr.length; i++){
-		if(arr[i]){
+	for (let i = 0; i < arr.length; i++) {
+		if (arr[i]) {
 			valueObj = arr[i];
 		}
 	}
@@ -155,19 +123,13 @@ function findValueInArray(arr){
 	return valueObj;
 }
 
-
-class FormItem extends Component{
-	constructor(props){
-		super(props);
-	}
-
-	render(){
-		let formItemStyles = [styles.formItem, this.props.style ? this.props.style : {}];
-		return(
-			<View style={formItemStyles}>
+class FormItem extends Component {
+	render() {
+		return (
+			<View style={this.props.style}>
 				{this.props.children}
 			</View>
-		)
+		);
 	}
 }
 
@@ -189,11 +151,11 @@ FormItem.defaultProps = {
 
 
 class Form extends Component{
-	constructor(props){
+	constructor(props) {
 		super(props);
 	}
 
-	validate(){
+	validate() {
 		let validationResults = checkForm(this.props.children);
 		const { shouldValidate, submit } = this.props;
 
@@ -216,10 +178,9 @@ class Form extends Component{
 		return validationResults.fields;
 	}
 
-	render(){
-		let formContainerStyles = [styles.formContainer, this.props.style ? this.props.style : {}];
+	render() {
 		return(
-			<View style={formContainerStyles}>
+			<View style={this.props.style}>
 				{this.props.children}	
 			</View>
 		);
@@ -237,11 +198,6 @@ Form.defaultProps = {
 	submit: () => { console.log('Form - submit function is not defined'); },
 	style: {}
 }
-
-const styles = {
-	formContainer:{},
-	formItem:{}
-};
 
 export {
 	Form as Form,
